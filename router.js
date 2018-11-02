@@ -16,7 +16,7 @@ router.post('/login', passport.authenticate('local', {
 }), // 인증 실패 시 401 리턴, {} -> 인증 스트레티지
     function (req, res) {
         console.log('허미');
-        res.redirect('/myinfo');
+        res.redirect('/');
     });
 
 router.get('/register', function (req, res) {
@@ -87,6 +87,7 @@ router.get('/myinfo', function (req, res) {
 });
 
 router.get('/',function(req,res){
+    console.log(req.session.userid)
     if(req.session.userid)
         res.render('main',{title:'main',user_info:req.session.userid})
     else

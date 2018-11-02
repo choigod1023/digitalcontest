@@ -3,12 +3,27 @@ var passport = require('passport') //passport module add
     LocalStrategy = require('passport-local').Strategy;
 var KakaoStrategy = require('passport-kakao').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var session = require('express-session');
+var MYSQLStore = require('express-mysql-session')(session);
+var sha256 = require('sha256');
+var options = {
+    host: 'hyunwoo.org',
+    user: 'sunrinlife',
+    port: 3307,
+    password: 'this1ssunr1nlif3',
+    database: 'sunrinlife'
+}
+var sessionStore = new MYSQLStore(options);
+var mysql_db = require('./db.js')();
+var conn = mysql_db.init();
+mysql_db.test_open(conn);
 
-
+var salt = 'jjang486';
 module.exports = () =>{
 passport.use(new LocalStrategy({
     usernameField: 'username',
     passwordField: 'password',
+    session:true,
     passReqToCallback: true //인증을 수행하는 인증 함수로 HTTP request를 그대로  전달할지 여부를 결정한다
 },
     function (req, username, password, done) {
@@ -92,7 +107,7 @@ passport.use('kakao-login', new KakaoStrategy({
     }
 ))
 passport.serializeUser(function (user, done) {
-    console.log('serializeUser');
+    console.log('serializeUser'+user);
     done(null, user)
 });
 

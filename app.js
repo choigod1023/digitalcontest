@@ -28,11 +28,11 @@ var options = {
 
 var sessionStore = new MYSQLStore(options);
 app.use(session({
-    secret:'choigod1023',
-    resave:false,
-    saveUninitalized:true,
-    cookie:{secure:true},
-    store:sessionStore
+    secret: 'choigod1023',
+    resave: false,
+    saveUninitalized: true,
+    cookie: { secure: true },
+    store: sessionStore
 }))
 
 app.use(cookieparser());
@@ -46,8 +46,8 @@ passportConfig();
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.use('/',route);
+app.use('/', route);
 
-app.listen(3000,function(){
+app.listen(3000, function () {
     console.log('asdfasdf');
 })
