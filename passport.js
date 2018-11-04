@@ -27,13 +27,13 @@ passport.use(new LocalStrategy({
     passReqToCallback: true //인증을 수행하는 인증 함수로 HTTP request를 그대로  전달할지 여부를 결정한다
 },
     function (req, username, password, done) {
-        var data;
+        console.log(username)
         var query = conn.query(`SELECT * from test WHERE accessid =\"${username}\"`, function (err, rows) {
             console.log(rows);
-            console.log(username)
+            console.log("username" + username)
             if (username === rows[0].accessid && sha256(salt + password) === rows[0].password) {
-                req.session.user_id = username;
-                console.log(req.session.user_id);
+                
+                console.log("우흥" + req.session.userid);
                 return done(null, {
                     'user_id': username,
                 });
@@ -107,7 +107,7 @@ passport.use('kakao-login', new KakaoStrategy({
     }
 ))
 passport.serializeUser(function (user, done) {
-    console.log('serializeUser'+user);
+    console.log('serializeUser'+JSON.stringify(user));
     done(null, user)
 });
 

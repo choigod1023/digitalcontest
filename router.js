@@ -3,6 +3,8 @@ var salt = 'jjang486';
 const passport = require('passport');
 const express = require('express');
 
+const psjs = require('./passport.js')
+psjs();
 const router = express.Router();
 
 router.get('/kakao', passport.authenticate('kakao-login'));
@@ -87,9 +89,9 @@ router.get('/myinfo', function (req, res) {
 });
 
 router.get('/',function(req,res){
-    console.log(req.session.userid)
-    if(req.session.userid)
-        res.render('main',{title:'main',user_info:req.session.userid})
+    console.log(req.session.user_id)
+    if(req.session.user_id)
+        res.render('main',{title:'main',user_info:req.session.user_id})
     else
         res.render('main',{title:'main',user_info:"로그인하세요"})
 })
